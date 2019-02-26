@@ -1,53 +1,54 @@
 import numpy as np
 import math
-import SolverResult
+from SolverResult import SolverResult
+
 
 def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d, Fs):
     # Simulation parameters
     dt = 1 / Fs
-    t = np.linspace(0, np.floor(d / dt) - 1) * dt
+    t = np.linspace(0, np.floor(d / dt) - 1, np.floor(d / dt)) * dt
 
     # Input parameters
 
     # String
-    MJ = string_matrix.MJ
-    CJ = string_matrix.CJ
-    KJ = string_matrix.KJ
+    MJ = np.array(string_matrix['MJ'].tolist())
+    CJ = np.array(string_matrix['CJ'].tolist())
+    KJ = np.array(string_matrix['KJ'].tolist())
 
-    L = string_parameters.L
+    L = np.array(string_parameters['L'].tolist())
 
-    Ns = string_matrix.Ns
-    j = np.linspace(1, Ns)
+    Ns = int(string_matrix['Ns'])
+    j = np.linspace(1, Ns, Ns)
 
     # Body
-    MK = body_matrix.MK
-    KK = body_matrix.KK
-    CK = body_matrix.CK
+    MK = np.array(body_matrix['MK'].tolist())
+    KK = np.array(body_matrix['KK'].tolist())
+    CK = np.array(body_matrix['CK'].tolist())
 
     xb = L
 
-    PhiB = body_matrix.PhiB
+    PhiB = np.array(body_matrix['PhiB'].tolist())
     Nb = len(PhiB)
 
     # Pluck parameters
 
-    xp = pluck_parameters.xp
-    Ti = pluck_parameters.Ti
-    dp = pluck_parameters.dp
-    F0 = pluck_parameters.F0
+    xp = np.array(pluck_parameters['xp'].tolist())
+    Ti = np.array(pluck_parameters['Ti'].tolist())
+    dp = np.array(pluck_parameters['dp'].tolist())
+    F0 = np.array(pluck_parameters['F0'].tolist())
     Tr = Ti + dp
 
     # Initialisation
 
     # Modal quantities
 
-    an = math.nan*np.zeros((Ns+1, len(t)))
-    bn = math.nan*np.zeros((Nb, len(t)))
+    an = np.zeros((Ns+1, len(t)))
+    bn = np.zeros((Nb, len(t)))
     an[:, (1, 2)] = 0
     bn[:, (1, 2)] = 0
 
     # Physical quantity
-    Fc = math.nan*np.zeros((1, len(t)))
+    Fc = np.zeros((1, len(t)))
     Fc[:, (1, 2)] = 0
 
     # Finite difference scheme
@@ -80,7 +81,7 @@ def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d,
 
     for i in range(1, len(t)-1):
 
-        Fe = (F0 / dp) * (i * dt - Ti) * (np.heaviside(i * dt - Ti) - np.heaviside(i * dt - Tr))
+        Fe = (F0 / dp) * (i * dt - Ti) * (np.heaviside((i * dt - Ti), 0.5) - np.heaviside((i * dt - Tr), 0.5))
 
         Fc[0, i] = -(1 / (PhiSc * A3 * PhiSc.T + PhiB * B3 * PhiB.T)) * (PhiB * B1 * bn[:, i] + PhiB * B2 * bn[:, i - 1] - PhiSc * A1 * an[:, i] - PhiSc * A2 * an[:, i-1] - PhiSc * A3 * PhiSe.T * Fe)
 
