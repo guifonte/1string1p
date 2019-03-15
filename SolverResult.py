@@ -6,3 +6,4 @@ class SolverResult(object):
         self.an = an
         self.bn = bn
         self.Fc = Fc
+

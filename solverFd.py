@@ -43,8 +43,8 @@ def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d,
 
     # Modal quantities
 
-    an = np.zeros((Ns+1, len(t)), dtype=np.float64)
-    bn = np.zeros((Nb, len(t)), dtype=np.float64)
+    an = np.ones((Ns+1, len(t)), dtype=np.float64)
+    bn = np.ones((Nb, len(t)), dtype=np.float64)
     an[:, (1, 2)] = 0
     bn[:, (1, 2)] = 0
 
@@ -109,7 +109,7 @@ def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d,
 
         if i % 1000 == 0:
             print("Progress: {} of {}".format(i, len(t)))
-
+    #qu
     # String displacement
     end = time.time()
     print(end-start)
