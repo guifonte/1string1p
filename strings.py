@@ -1,8 +1,39 @@
 import numpy as np
-from stringMatrix import StringMatrix
+import scipy.io
 
 
-def strings(string_parameters,fhmax):
+class StringParameters(object):
+    def __init__(self, L, D, mu, T, B, f0):
+        self.L = L
+        self.D = D
+        self.mu = mu
+        self.T = T
+        self.B = B
+        self.f0 = f0
+
+    @classmethod
+    def frommat(cls, filename):
+        string_parameters = scipy.io.loadmat(filename, squeeze_me=True)
+        string_parameters = string_parameters['string_parameters']
+        L = float(string_parameters['L'])
+        D = float(string_parameters['D'])
+        mu = float(string_parameters['mu'])
+        T = float(string_parameters['T'])
+        B = float(string_parameters['B'])
+        f0 = float(string_parameters['f0'])
+
+        return cls(L, D, mu, T, B, f0)
+
+    
+class StringMatrix(object):
+    def __init__(self, MJ, KJ, CJ, Ns):
+        self.MJ = MJ  # np.zeros((Ns+1, Ns+1))
+        self.KJ = KJ
+        self.CJ = CJ
+        self.Ns = Ns
+
+
+def stringscalculator(string_parameters,fhmax):
 
     L = string_parameters.L
     D = string_parameters.D
@@ -28,7 +59,7 @@ def strings(string_parameters,fhmax):
     dVETE = 1 * 10 ** (-3)  # thermo and visco - elastic effects constant(Valette) -
     # It is a problem, high uncertainty in determination!
 
-    for j in range(1, Ns):
+    for j in range(1, Ns+1):
         kj[j-1] = (j**2) * np.pi**2 * T / (2 * L) + (j**4) * B * np.pi**4 / (2 * L**3)
 
         omegaj = (j * np.pi / L) * np.sqrt(T / mu) * np.sqrt(1 + (j ** 2) * ((B * np.pi ** 2) / (T * L ** 2)))
@@ -45,17 +76,21 @@ def strings(string_parameters,fhmax):
 
         cj[j-1] = (j * np.pi * np.sqrt(T * mu))/(2 * Qt)
 
-    KJ = np.diagonal(np.array([T / L], kj))
-    CJ = np.diagonal(np.array([0], cj))
+    kj = np.insert(kj, 0, T / L)
+    KJ = np.diagflat(kj)
+
+    cj = np.insert(cj, 0, 0)
+    CJ = np.diagflat(cj)
 
     MJ = np.ones((Ns+1, Ns+1))
     MJ[0, 0] = L * mu / 3
 
-    for j in range(1, Ns):
+    for j in range(1, Ns+1):
         MJ[0, j] = L * mu / (np.pi * j)
         MJ[j, 0] = MJ[0, j]
 
-    MJ[1:-1, 1:-1] = np.diagonal(mj)
+    mjdiag = np.diagflat(mj)
+    MJ[1:, 1:] = mjdiag
 
     string_matrix = StringMatrix(MJ, KJ, CJ, Ns)
 

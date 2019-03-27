@@ -1,6 +1,18 @@
 import numpy as np
 import time
-from SolverResult import SolverResult
+# from SolverResult import SolverResult
+# from stringMatrix import StringMatrix
+# from StringParameters import StringParameters
+
+
+class SolverResult(object):
+    def __init__(self, z_p, z_b1, z_b2, an, bn, Fc):
+        self.z_p = z_p
+        self.z_b1 = z_b1
+        self.z_b2 = z_b2
+        self.an = an
+        self.bn = bn
+        self.Fc = Fc
 
 
 def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d, Fs):
@@ -12,13 +24,13 @@ def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d,
     # Input parameters
 
     # String
-    MJ = np.array(string_matrix['MJ'].tolist())
-    CJ = np.array(string_matrix['CJ'].tolist())
-    KJ = np.array(string_matrix['KJ'].tolist())
+    MJ = string_matrix.MJ
+    CJ = string_matrix.CJ
+    KJ = string_matrix.KJ
 
-    L = np.array(string_parameters['L'].tolist())
+    L = string_parameters.L
 
-    Ns = int(string_matrix['Ns'])
+    Ns = string_matrix.Ns
     j = np.linspace(1, Ns, Ns)
 
     # Body
