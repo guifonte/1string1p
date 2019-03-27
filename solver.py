@@ -98,10 +98,13 @@ def solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs):
     A3PhiSeT = A3 @ PhiSe.T
     A3PhiScT = A3 @ PhiSc.T
     B3PhiBT = B3 @ PhiB.T
+    F0_dp = F0/dp
+    B1_diag = np.diagonal(B1)
+    B2_diag = np.diagonal(B2)
 
     for i in range(1, len(t)-1):
 
-        Fe = (F0 / dp) * (i * dt - Ti) * (np.heaviside((i * dt - Ti), 0.5) - np.heaviside((i * dt - Tr), 0.5))
+        Fe = F0_dp * (i * dt - Ti) * (np.heaviside((i * dt - Ti), 0.5) - np.heaviside((i * dt - Tr), 0.5))
 
         Fc2 = (PhiBB1 @ bn[:, i] + PhiBB2 @ bn[:, i - 1] - PhiScA1 @ an[:, i] - PhiScA2 @ an[:, i-1] - PhiScA3PhiSeT * Fe)
         Fc[i] = Fc1 * Fc2
@@ -112,7 +115,7 @@ def solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs):
 
         an[:, i + 1] = A1 @ an[:, i] + A2 @ an[:, i - 1] + A3PhiSeT * Fe - A3PhiScT * Fc[i]
 
-        bn[:, i + 1] = B1 @ bn[:, i] + B2 @ bn[:, i - 1] + B3PhiBT * Fc[i]
+        bn[:, i + 1] = B1_diag * bn[:, i] + B2_diag * bn[:, i - 1] + B3PhiBT * Fc[i]
 
         if i % 1000 == 0:
             print("Progress: {} of {}".format(i, len(t)))
