@@ -1,8 +1,5 @@
 import numpy as np
 import time
-# from SolverResult import SolverResult
-# from stringMatrix import StringMatrix
-# from StringParameters import StringParameters
 
 
 class SolverResult(object):
@@ -15,7 +12,7 @@ class SolverResult(object):
         self.Fc = Fc
 
 
-def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d, Fs):
+def solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs):
     start = time.time()
     # Simulation parameters
     dt = 1 / Fs
@@ -28,27 +25,27 @@ def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d,
     CJ = string_matrix.CJ
     KJ = string_matrix.KJ
 
-    L = string_parameters.L
+    L = string_matrix.L
 
     Ns = string_matrix.Ns
     j = np.linspace(1, Ns, Ns)
 
     # Body
-    MK = np.array(body_matrix['MK'].tolist())
-    KK = np.array(body_matrix['KK'].tolist())
-    CK = np.array(body_matrix['CK'].tolist())
+    MK = body_matrix.MK
+    KK = body_matrix.KK
+    CK = body_matrix.CK
 
     xb = L
 
-    PhiB = np.array(body_matrix['PhiB'].tolist())
-    Nb = len(PhiB)
+    PhiB = body_matrix.PhiB
+    Nb = body_matrix.Nb
 
     # Pluck parameters
 
-    xp = np.array(pluck_parameters['xp'].tolist())
-    Ti = np.array(pluck_parameters['Ti'].tolist())
-    dp = np.array(pluck_parameters['dp'].tolist())
-    F0 = np.array(pluck_parameters['F0'].tolist())
+    xp = pluck_parameters.xp
+    Ti = pluck_parameters.Ti
+    dp = pluck_parameters.dp
+    F0 = pluck_parameters.F0
     Tr = Ti + dp
 
     # Initialisation
@@ -101,8 +98,6 @@ def solverfd(body_matrix, string_matrix, string_parameters, pluck_parameters, d,
     A3PhiSeT = A3 @ PhiSe.T
     A3PhiScT = A3 @ PhiSc.T
     B3PhiBT = B3 @ PhiB.T
-    Fc2 = np.float64(0)
-    Fe = np.float64(0)
 
     for i in range(1, len(t)-1):
 

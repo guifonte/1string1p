@@ -24,13 +24,14 @@ class StringParameters(object):
 
         return cls(L, D, mu, T, B, f0)
 
-    
+
 class StringMatrix(object):
-    def __init__(self, MJ, KJ, CJ, Ns):
+    def __init__(self, MJ, KJ, CJ, L, Ns):
         self.MJ = MJ  # np.zeros((Ns+1, Ns+1))
         self.KJ = KJ
         self.CJ = CJ
         self.Ns = Ns
+        self.L = L
 
 
 def stringscalculator(string_parameters,fhmax):
@@ -92,6 +93,6 @@ def stringscalculator(string_parameters,fhmax):
     mjdiag = np.diagflat(mj)
     MJ[1:, 1:] = mjdiag
 
-    string_matrix = StringMatrix(MJ, KJ, CJ, Ns)
+    string_matrix = StringMatrix(MJ, KJ, CJ, L, Ns)
 
     return string_matrix
