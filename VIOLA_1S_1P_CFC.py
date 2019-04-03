@@ -1,3 +1,6 @@
+import librosa
+
+import time
 from strings import stringscalculator, StringParameters
 from body import BodyMatrix
 from pluck import PluckParameters
@@ -8,7 +11,8 @@ from solver import solverfd
 string_parameters = StringParameters.frommat('one_string_1.mat')
 
 # Body
-body_matrix = BodyMatrix.frommat("Viola_ComplexModes_Yzz_Yyz_NoNorm_matrix.mat")
+# body_matrix = BodyMatrix.frommat("Viola_ComplexModes_Yzz_Yyz_NoNorm_matrix.mat")
+body_matrix = BodyMatrix.fromnp("Ortho_plate_fmk", "Ortho_plate_phi")
 
 # Pluck parameters
 # pluck_parameters = PluckParameters(0.50, 0.001, 0.008, 1, 0)
@@ -26,4 +30,7 @@ string_matrix = stringscalculator(string_parameters, fhmax)
 # Resolution
 
 result = solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs)
+
+timestamp = str(time.time()).split('.')[0]
+librosa.output.write_wav('./out_'+timestamp+'.wav', result.z_p, sr=44100, norm=True)
 
