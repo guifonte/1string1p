@@ -52,7 +52,7 @@ def stringscalculator(string_parameters,fhmax):
     mj = np.ones(Ns)*L*mu/2  # modal masses
     kj = np.ones(Ns)  # modal stiffnesses
     cj = np.ones(Ns)  # modal damping
-    Qd = 5500  # damping due to the dislocation phenomenom(Adjusted in Pathé) -
+    Qd = 5500  # damping due to the dislocation phenomenom(Adjusted in Pathe) -
     # Depends strongly on the history of the material 7000 - 80000 for brass strings(Cuesta)!
 
     # Qw =?? $ damping included for a wound string due to the dry friction between two consecutive turns.
