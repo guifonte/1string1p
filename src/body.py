@@ -2,7 +2,7 @@ import scipy.io
 import numpy as np
 
 
-class BodyMatrix(object):
+class BodyMatrix1p(object):
     def __init__(self, MK, KK, CK, PhiB, Nb):
         self.MK = MK
         self.KK = KK
@@ -44,3 +44,22 @@ class BodyMatrix(object):
         Nb = len(mk)
 
         return cls(MK, KK, CK, PhiB, Nb)
+
+
+class BodyMatrix2p(object):
+    def __init__(self, B, GB, PHIB, Nb):
+        self.B = B
+        self.GB = GB
+        self.PHIB = PHIB
+        self.Nb = Nb
+
+    @classmethod
+    def frommat(cls, filename):
+        body_matrix = scipy.io.loadmat(filename, squeeze_me=True)
+        body_matrix = body_matrix['body_matrix']
+        B = np.array(body_matrix['B'].tolist())
+        GB = np.array(body_matrix['GB'].tolist())
+        PHIB = np.array(body_matrix['PHIB'].tolist())
+        Nb = int(body_matrix['Nb'])
+
+        return cls(B, GB, PHIB, Nb)

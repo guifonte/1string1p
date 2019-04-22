@@ -23,12 +23,12 @@ class PluckParameters1p(object):
 
 
 class PluckParameters2p(object):
-    def __init__(self, xp, Ti, dp, F0, gama):
+    def __init__(self, xp, Ti, dp, F0, gamma):
         self.xp = xp
         self.Ti = Ti  # in (s)
         self.dp = dp
         self.F0 = F0
-        self.gama = gama
+        self.gamma = gamma
 
     @classmethod
     def frommat(cls, filename):
@@ -38,6 +38,6 @@ class PluckParameters2p(object):
         Ti = float(pluck_parameters['Ti'])
         dp = float(pluck_parameters['dp'])
         F0 = float(pluck_parameters['F0'])
-        gama = float(pluck_parameters['gama'])
+        gamma = float(pluck_parameters['gamma'])
 
-        return cls(xp, Ti, dp, F0, gama)
+        return cls(xp, Ti, dp, F0, gamma)
