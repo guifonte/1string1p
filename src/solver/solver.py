@@ -1,6 +1,6 @@
 import numpy as np
 import time
-from csolver import csolverfd1p
+# from csolver import csolverfd1p
 
 
 class SolverResult1p(object):
@@ -26,14 +26,14 @@ class SolverResult2p(object):
         self.Fc = Fc
 
 
-def solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, cython_opt):
+'''def solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, cython_opt):
     if pol_num == 1:
         if cython_opt == 1:
             return csolverfd1p(body_matrix, string_matrix, pluck_parameters, d, Fs)
         else:
             return solverfd1p(body_matrix, string_matrix, pluck_parameters, d, Fs)
     else:
-        return solverfd2p(body_matrix, string_matrix, pluck_parameters, d, Fs)
+        return solverfd2p(body_matrix, string_matrix, pluck_parameters, d, Fs)'''
 
 
 def solverfd1p(body_matrix, string_matrix, pluck_parameters, d, Fs):
@@ -433,3 +433,5 @@ def solverfd_1(body_matrix, string_matrix, pluck_parameters, d, Fs):
     z_b2 = np.real(PhiBz @ bnf)*1e3  # in mm
 
     return SolverResult1p(z_p, z_b1, z_b2, anf, bnf, Fcf)
+
+

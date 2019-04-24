@@ -23,7 +23,7 @@ class StringParameters(object):
         T = float(string_parameters['T'])
         B = float(string_parameters['B'])
         f0 = float(string_parameters['f0'])
-        note = string_parameters['note']
+        note = str(string_parameters['Note'])
         return cls(L, D, mu, T, B, f0, note)
 
 
@@ -46,15 +46,15 @@ class StringMatrix_2p(object):
 
 
 class StringMatrix(object):
-    def __init__(self, A1, A2, GSe, GSc, PhiSe, PhiSc, Ns, L):
+    def __init__(self, A1, A2, GSe, GSc, PhiSe, PhiSc, L, Ns):
         self.A1 = A1
         self.A2 = A2
         self.GSe = GSe
         self.GSc = GSc
         self.PhiSe = PhiSe
         self.PhiSc = PhiSc
-        self.Ns = Ns
         self.L = L
+        self.Ns = Ns
 
 def stringscalculator(string_parameters,fhmax, xp, dt, pol_num):
 
