@@ -1,6 +1,7 @@
 import scipy.io
 import numpy as np
 
+
 class BodyMatrix(object):
     def __init__(self, B1, B2, PhiBz, PhiBy, GBz, GBy, Nb):
         self.B1 = B1
@@ -12,19 +13,28 @@ class BodyMatrix(object):
         self.Nb = Nb
 
     @classmethod
-    def frommat(cls, filename):
+    def frommat(cls, filename, dt):
         body_matrix = scipy.io.loadmat(filename, squeeze_me=True)
         body_matrix = body_matrix['body_matrix']
         MK = np.array(body_matrix['MK'].tolist())
         KK = np.array(body_matrix['KK'].tolist())
         CK = np.array(body_matrix['CK'].tolist())
-        PhiB = np.array(body_matrix['PhiB'].tolist())
+        PhiBz = np.array(body_matrix['PhiBz'].tolist())
+        PhiBy = np.array(body_matrix['PhiBz'].tolist())
         Nb = int(body_matrix['Nb'])
 
-        return cls(MK, KK, CK, PhiB, Nb)
+        BI = np.linalg.inv(MK / dt ** 2 + CK / (2 * dt))
+        B1 = BI @ (2 * MK / dt ** 2 - KK)
+        B2 = BI @ (CK / (2 * dt) - MK / dt ** 2)
+        B3 = BI
+
+        GBz = B3 @ PhiBz
+        GBy = B3 @ PhiBy
+
+        return cls(B1, B2, PhiBz, PhiBy, GBz, GBy, Nb)
 
     @classmethod
-    def fromnp(cls, fmkfilename, phifilename):
+    def fromnp(cls, fmkfilename, phifilename, dt):
         fmk = np.load(fmkfilename)
         phi = np.load(phifilename)
 
@@ -41,10 +51,20 @@ class BodyMatrix(object):
         KK = np.diagflat(kk)
         CK = np.diagflat(ck)
 
-        PhiB = phi[:, 2]  # dz
+        PhiBz = phi[:, 2]  # dz
+        PhiBy = phi[:, 1]  # dy
+
         Nb = len(mk)
 
-        return cls(MK, KK, CK, PhiB, Nb)
+        BI = np.linalg.inv(MK / dt ** 2 + CK / (2 * dt))
+        B1 = BI @ (2 * MK / dt ** 2 - KK)
+        B2 = BI @ (CK / (2 * dt) - MK / dt ** 2)
+        B3 = BI
+
+        GBz = B3 @ PhiBz
+        GBy = B3 @ PhiBy
+
+        return cls(B1, B2, PhiBz, PhiBy, GBz, GBy, Nb)
 
 
 class BodyMatrix1p(object):
