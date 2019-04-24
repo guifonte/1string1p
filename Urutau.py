@@ -3,7 +3,7 @@ import librosa
 import time
 from src.strings import stringscalculator, StringParameters
 from src.body import BodyMatrix1p, BodyMatrix2p
-from src.pluck import PluckParameters1p, PluckParameters2p
+from src.pluck import PluckParameters
 from src.solver.solver import solverfd
 
 # Input parameters
@@ -23,10 +23,8 @@ cython_opt = 0  # uses cython
 
 # Pluck parameters
 # pluck_parameters = PluckParameters(0.50, 0.001, 0.008, 1, 0)
-if pol_num == 1:
-    pluck_parameters = PluckParameters1p.frommat(pluck_path)
-else:
-    pluck_parameters = PluckParameters2p.frommat(pluck_path)
+pluck_parameters = PluckParameters.frommat(pluck_path)
+
 
 # String
 string_parameters = StringParameters.frommat(string_path)
@@ -44,4 +42,3 @@ result = solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, 
 
 timestamp = str(time.time()).split('.')[0]
 librosa.output.write_wav('./OUT/out_'+timestamp+'.wav', result.z_p, sr=44100, norm=True)
-

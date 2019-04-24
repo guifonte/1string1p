@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8af50e1a-5500-49c6-9314-5d7410e9cbb4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DATA/PLUCK/pluck_3.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/solver/solver.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Urutau.py" beforeDir="false" afterPath="$PROJECT_DIR$/Urutau.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/body.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/body.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pluck.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pluck.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/solver/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/solver/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/solver/solver.pyx" beforeDir="false" afterPath="$PROJECT_DIR$/src/solver/csolver.pyx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/strings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/strings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,53 +15,69 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Urutau.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/solver/solver.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="206" column="23" lean-forward="true" selection-start-line="206" selection-start-column="23" selection-end-line="206" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/solver/csolver.pyx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/body.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="51" column="20" lean-forward="true" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Urutau.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="580">
+                  <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+                  <folding>
+                    <element signature="e#0#14#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/strings.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="401">
+                  <caret line="294" column="25" lean-forward="true" selection-start-line="294" selection-start-column="25" selection-end-line="294" selection-end-column="25" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/body.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-500">
+                  <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/DATA/BODY/Viola_ComplexModes_Yzz_Yyz_NoNorm_17.mat">
+              <provider selected="true" editor-type-id="text-editor" />
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/solver/solver.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="50">
+                  <caret line="135" column="10" selection-start-line="135" selection-start-column="10" selection-end-line="135" selection-end-column="10" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -104,13 +117,13 @@
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/solver.pyx" />
         <option value="$PROJECT_DIR$/VIOLA_1S_1P_CFC.py" />
-        <option value="$PROJECT_DIR$/src/strings.py" />
-        <option value="$PROJECT_DIR$/src/pluck.py" />
         <option value="$PROJECT_DIR$/src/solver/setup.py" />
         <option value="$PROJECT_DIR$/src/solver/csolver.pyx" />
-        <option value="$PROJECT_DIR$/Urutau.py" />
-        <option value="$PROJECT_DIR$/src/body.py" />
         <option value="$PROJECT_DIR$/src/solver/solver.py" />
+        <option value="$PROJECT_DIR$/src/pluck.py" />
+        <option value="$PROJECT_DIR$/Urutau.py" />
+        <option value="$PROJECT_DIR$/src/strings.py" />
+        <option value="$PROJECT_DIR$/src/body.py" />
       </list>
     </option>
   </component>
@@ -142,6 +155,12 @@
               <item name="1string" type="b2602c69:ProjectViewProjectNode" />
               <item name="1string" type="462c0819:PsiDirectoryNode" />
               <item name="DATA" type="462c0819:PsiDirectoryNode" />
+              <item name="BODY" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="1string" type="b2602c69:ProjectViewProjectNode" />
+              <item name="1string" type="462c0819:PsiDirectoryNode" />
+              <item name="DATA" type="462c0819:PsiDirectoryNode" />
               <item name="PLUCK" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -163,7 +182,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/DATA/PLUCK" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/DATA/BODY" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -261,15 +280,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-2" width="1920" height="1049" extended-state="6" />
+    <frame x="0" y="1105" width="1366" height="710" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.12493411" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.24869695" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.56141275" visible="true" weight="0.35217392" />
-      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.43858725" side_tool="true" visible="true" weight="0.35217392" />
-      <window_info anchor="bottom" id="Python Console" order="2" sideWeight="0.49657354" weight="0.32391304" />
+      <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.5591958" visible="true" weight="0.34079173" />
+      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.44080418" side_tool="true" visible="true" weight="0.34079173" />
+      <window_info anchor="bottom" id="Python Console" order="2" sideWeight="0.4960464" weight="0.32391304" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" weight="0.32934782" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.49776787" weight="0.32391304" />
@@ -410,9 +429,7 @@
     <entry file="file://$PROJECT_DIR$/MATLAB/conv_real_LSCE.m">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/solver/solver.c">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/solver/solver.c" />
     <entry file="file://$PROJECT_DIR$/MATLAB/solver_FD_v.m">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -446,27 +463,7 @@
     <entry file="file://$PROJECT_DIR$/DATA/PLUCK/pluck_3.mat">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pluck.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="28" column="20" lean-forward="true" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/solver/csolver.pyx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/solver/solver1.pyx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="126" lean-forward="true" selection-start-line="126" selection-end-line="126" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/solver/solver1.pyx" />
     <entry file="file://$PROJECT_DIR$/src/solver/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -477,17 +474,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/solver/csolver.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-225" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/solver/csolver.pyx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+        <state relative-caret-position="484">
+          <caret line="146" column="17" lean-forward="true" selection-start-line="146" selection-start-column="17" selection-end-line="146" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/strings.py">
+    <entry file="file://$PROJECT_DIR$/src/pluck.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1721">
-          <caret line="42" column="20" lean-forward="true" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+        <state relative-caret-position="75">
+          <caret line="5" column="59" selection-start-line="5" selection-start-column="59" selection-end-line="5" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/solver/solver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="135" column="10" selection-start-line="135" selection-start-column="10" selection-end-line="135" selection-end-column="10" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -496,33 +505,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Urutau.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        <state relative-caret-position="580">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/strings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="294" column="25" lean-forward="true" selection-start-line="294" selection-start-column="25" selection-end-line="294" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/body.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="51" column="20" lean-forward="true" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
+        <state relative-caret-position="-500">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/solver/solver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="206" column="23" lean-forward="true" selection-start-line="206" selection-start-column="23" selection-end-line="206" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/DATA/BODY/Viola_ComplexModes_Yzz_Yyz_NoNorm_17.mat">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
