@@ -26,6 +26,16 @@ class SolverResult2p(object):
         self.Fc = Fc
 
 
+class SolverResult(object):
+    def __init__(self, z_p, z_b1, z_b2, y_p=None, y_b1=None, y_b2=None):
+        self.z_p = z_p
+        self.y_p = y_p
+        self.z_b1 = z_b1
+        self.z_b2 = z_b2
+        self.y_b1 = y_b1
+        self.y_b2 = y_b2
+
+
 '''def solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, cython_opt):
     if pol_num == 1:
         if cython_opt == 1:
@@ -435,3 +445,157 @@ def solverfd_1(body_matrix, string_matrix, pluck_parameters, d, Fs):
     return SolverResult1p(z_p, z_b1, z_b2, anf, bnf, Fcf)
 
 
+def solverfd_2(body_matrix, string_matrix, pluck_parameters, d, Fs):
+    start = time.time()
+    # Simulation parameters
+    dt = 1 / Fs
+    t = np.linspace(0, np.floor(d / dt) - 1, np.floor(d / dt)) * dt
+
+    # Input parameters
+
+    # String
+    A1 = string_matrix.A1
+    A2 = string_matrix.A2
+    GSe = string_matrix.GSe
+    GSc = string_matrix.GSc
+    PhiSe = string_matrix.PhiSe
+    PhiSc = string_matrix.PhiSc
+    L = string_matrix.L
+    Ns = string_matrix.Ns
+
+    j = np.linspace(1, Ns, Ns)
+
+    # Body
+
+    B1 = body_matrix.B1
+    B2 = body_matrix.B2
+    GBz = body_matrix.GBz
+    PhiBz = body_matrix.PhiBz
+    GBy = body_matrix.GBy
+    PhiBy = body_matrix.PhiBy
+    Nb = body_matrix.Nb
+    xb = L
+
+    # Pluck parameters
+
+    xp = pluck_parameters.xp
+    Ti = pluck_parameters.Ti
+    dp = pluck_parameters.dp
+    F0 = pluck_parameters.F0
+    gamma = pluck_parameters.gamma
+    Tr = Ti + dp
+
+    # Initialisation
+
+    # Modal quantities
+
+    az = np.ones((Ns + 1, int(len(t)/5)), dtype=np.float64)
+    ay = np.ones((Ns + 1, int(len(t) / 5)), dtype=np.float64)
+    b = np.ones((Nb, int(len(t)/5)), dtype=np.float64)
+
+    az[:, 0] = 0
+    ay[:, 0] = 0
+    b[:, 0] = 0
+
+    az_1 = np.zeros(Ns + 1, dtype=np.float64)
+    az_2 = np.zeros(Ns + 1, dtype=np.float64)
+    ay_1 = np.zeros(Ns + 1, dtype=np.float64)
+    ay_2 = np.zeros(Ns + 1, dtype=np.float64)
+    b_1 = np.zeros(Nb, dtype=np.float64)
+    b_2 = np.zeros(Nb, dtype=np.float64)
+
+    # Physical quantity
+    Fcz = np.zeros(int(len(t) / 5))
+    Fcy = np.zeros(int(len(t) / 5))
+
+    # ITERATIVE COMPUTATION OF SOLUTION
+
+    B1_diag = np.diagonal(B1)
+    B2_diag = np.diagonal(B2)
+    PhiScGSc = PhiSc @ GSc
+    PhiB = np.vstack((PhiBz, PhiBy))
+    GB = np.vstack((GBz, GBy))
+    PhiBcGBc = PhiB @ GB.T
+    PhiBcGBc[0, 0] = PhiBcGBc[0, 0] + PhiScGSc
+    PhiBcGBc[1, 1] = PhiBcGBc[1, 1] + PhiScGSc
+    Fc1 = np.linalg.inv(PhiBcGBc)
+
+    F0_dp = F0/dp
+
+    for i in range(1, len(t)-1):
+
+        Fe = F0_dp * (i * dt - Ti) * (np.heaviside((i * dt - Ti), 0.5) - np.heaviside((i * dt - Tr), 0.5))
+        Fez = Fe * np.sin(gamma)
+        Fey = Fe * np.cos(gamma)
+
+        if i % 2 == 0:
+            Aalphaz = A1 @ az_1 + A2 @ az_2 + GSe * Fez
+            Aalphay = A1 @ ay_1 + A2 @ ay_2 + GSe * Fey
+            Bbeta = B1_diag * b_1 + B2_diag * b_2
+            Fc2z = PhiSc @ Aalphaz - PhiBz @ Bbeta
+            Fc2y = PhiSc @ Aalphay - PhiBy @ Bbeta
+            Fcz_temp = Fc1[0, 0] * Fc2z + Fc1[0, 1] * Fc2y
+            Fcy_temp = Fc1[1, 0] * Fc2z + Fc1[1, 1] * Fc2y
+
+            az_2 = Aalphaz - GSc * Fcz_temp
+            ay_2 = Aalphay - GSc * Fcy_temp
+            b_2 = Bbeta + GBz * Fcz_temp + GBy * Fcy_temp
+
+        else:
+            Aalphaz = A1 @ az_2 + A2 @ az_1 + GSe * Fez
+            Aalphay = A1 @ ay_2 + A2 @ ay_1 + GSe * Fey
+            Bbeta = B1_diag * b_2 + B2_diag * b_1
+            Fc2z = PhiSc @ Aalphaz - PhiBz @ Bbeta
+            Fc2y = PhiSc @ Aalphay - PhiBy @ Bbeta
+            Fcz_temp = Fc1[0, 0] * Fc2z + Fc1[0, 1] * Fc2y
+            Fcy_temp = Fc1[1, 0] * Fc2z + Fc1[1, 1] * Fc2y
+
+            az_1 = Aalphaz - GSc * Fcz_temp
+            ay_1 = Aalphay - GSc * Fcy_temp
+            b_1 = Bbeta + GBz * Fcz_temp + GBy * Fcy_temp
+
+        if i % 5 == 0:
+            if i % 2 == 0:
+                az[:, int(i / 5)] = az_2
+                ay[:, int(i / 5)] = ay_2
+                b[:, int(i / 5)] = b_2
+            else:
+                az[:, int(i / 5)] = az_1
+                ay[:, int(i / 5)] = ay_1
+                b[:, int(i / 5)] = b_1
+
+            Fcz[int(i / 5)] = Fcz_temp
+            Fcy[int(i / 5)] = Fcy_temp
+
+        if i % 20000 == 0:
+            temp_end = time.time() - start
+            print("Progress: {a:.2f}% - {b:.2f}s".format(a=((float(i) / len(t)) * 100), b=temp_end))
+
+        #  print("i: {a:d}   Fz: {b:.10f}   Fy: {c:.10f}".format(a=i, b=Fcz_temp, c=Fcy_temp))
+
+    # String displacement
+    end = time.time()
+    print("Elapsed time = {:.2f}s".format(end - start))
+
+    # String displacement at the plucking point
+    z_p = np.real(PhiSe @ az) * 1e3  # in mm
+    y_p = np.real(PhiSe @ ay) * 1e3  # in mm
+
+    # String displacement at the coupling point
+    z_b1 = np.real(PhiSc @ az) * 1e3  # in mm
+    y_b1 = np.real(PhiSc @ ay) * 1e3  # in mm
+
+    # Body displacement at the coupling point
+    z_b2 = np.real(PhiBz @ b) * 1e3  # in mm
+    y_b2 = np.real(PhiBy @ b) * 1e3  # in mm
+
+    return SolverResult(z_p, z_b1, z_b2, y_p, y_b1, y_b2)
+
+
+def derivative(a, dt):
+    b = np.zeros(len(a) - 1)
+
+    for i in range(1, len(a) - 1):
+        b[i] = (a[i] - a[i-1])/dt
+
+    return b

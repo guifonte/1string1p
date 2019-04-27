@@ -20,7 +20,7 @@ class BodyMatrix(object):
         KK = np.array(body_matrix['KK'].tolist())
         CK = np.array(body_matrix['CK'].tolist())
         PhiBz = np.array(body_matrix['PhiBz'].tolist())
-        PhiBy = np.array(body_matrix['PhiBz'].tolist())
+        PhiBy = np.array(body_matrix['PhiBy'].tolist())
         Nb = int(body_matrix['Nb'])
 
         BI = np.linalg.inv(MK / dt ** 2 + CK / (2 * dt))
