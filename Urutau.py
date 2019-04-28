@@ -5,7 +5,7 @@ import numpy as np
 from src.strings import stringscalculator, StringParameters, stringscalculator_1
 from src.body import BodyMatrix1p, BodyMatrix2p, BodyMatrix
 from src.pluck import PluckParameters
-from src.solver.solver import solverfd_2, derivative
+from src.solver.solver import solverfd, derivative
 
 # Input parameters
 string_path = './DATA/STRINGS/one_string_1.mat'
@@ -20,7 +20,7 @@ Fs = 5*44100
 dt = 1/Fs
 d = 8  # duration
 
-pol_num = 2  # number of polarizations
+pol_num = 1  # number of polarizations
 cython_opt = 0  # uses cython
 audio_pluck_disp = 0
 audio_pluck_vel = 1
@@ -37,7 +37,6 @@ pluck_parameters = PluckParameters.frommat(pluck_path)
 
 # String
 string_parameters = StringParameters.frommat(string_path)
-# string_matrix = stringscalculator(string_parameters, fhmax, pluck_parameters.xp, dt, pol_num)
 string_matrix = stringscalculator_1(string_parameters, fhmax, pluck_parameters.xp, dt)
 
 # Body
@@ -46,18 +45,17 @@ string_matrix = stringscalculator_1(string_parameters, fhmax, pluck_parameters.x
     body_matrix = BodyMatrix1p.fromnp(body_fmk_path, body_phi_path)
 else:
     body_matrix = BodyMatrix2p.frommat("./DATA/BODY/Viola_ComplexModes_Yzz_Yyz_NoNorm_matrix.mat")'''
-body_matrix = BodyMatrix.fromnp(body_fmk_path, body_phi_path, dt)
-# body_matrix = BodyMatrix.frommat(body_path, dt)
+# body_matrix = BodyMatrix.fromnp(body_fmk_path, body_phi_path, dt)
+body_matrix = BodyMatrix.frommat(body_path, dt)
 
 # Resolution
-# result = solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, cython_opt)
-result = solverfd_2(body_matrix, string_matrix, pluck_parameters, d, Fs)
+result = solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, cython_opt)
 
 
 timestamp = str(time.time()).split('.')[0]
 infilename = os.path.splitext(os.path.basename(body_path))[0]
 outpath = './OUT/' + timestamp
-outfilename = infilename + '_' + string_parameters.note + '_' + str(fhmax) + 'Hz' + '.wav'
+outfilename = str(pol_num) + 'p_' + infilename + '_' + string_parameters.note + '_' + str(fhmax) + 'Hz' + '.wav'
 
 if audio_pluck_disp == 1:
     if pol_num == 1:

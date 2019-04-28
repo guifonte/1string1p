@@ -36,14 +36,11 @@ class SolverResult(object):
         self.y_b2 = y_b2
 
 
-'''def solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, cython_opt):
+def solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, cython_opt):
     if pol_num == 1:
-        if cython_opt == 1:
-            return csolverfd1p(body_matrix, string_matrix, pluck_parameters, d, Fs)
-        else:
-            return solverfd1p(body_matrix, string_matrix, pluck_parameters, d, Fs)
+        return solverfd_1(body_matrix, string_matrix, pluck_parameters, d, Fs)
     else:
-        return solverfd2p(body_matrix, string_matrix, pluck_parameters, d, Fs)'''
+        return solverfd_2(body_matrix, string_matrix, pluck_parameters, d, Fs)
 
 
 def solverfd1p(body_matrix, string_matrix, pluck_parameters, d, Fs):
@@ -349,14 +346,10 @@ def solverfd_1(body_matrix, string_matrix, pluck_parameters, d, Fs):
     B2 = body_matrix.B2
     GBz = body_matrix.GBz
     PhiBz = body_matrix.PhiBz
-    GBy = body_matrix.GBy
-    PhiBy = body_matrix.PhiBy
     Nb = body_matrix.Nb
-    xb = L
 
     # Pluck parameters
 
-    xp = pluck_parameters.xp
     Ti = pluck_parameters.Ti
     dp = pluck_parameters.dp
     F0 = pluck_parameters.F0
@@ -442,7 +435,7 @@ def solverfd_1(body_matrix, string_matrix, pluck_parameters, d, Fs):
     # Body displacement
     z_b2 = np.real(PhiBz @ bnf)*1e3  # in mm
 
-    return SolverResult1p(z_p, z_b1, z_b2, anf, bnf, Fcf)
+    return SolverResult(z_p, z_b1, z_b2)
 
 
 def solverfd_2(body_matrix, string_matrix, pluck_parameters, d, Fs):
@@ -478,7 +471,6 @@ def solverfd_2(body_matrix, string_matrix, pluck_parameters, d, Fs):
 
     # Pluck parameters
 
-    xp = pluck_parameters.xp
     Ti = pluck_parameters.Ti
     dp = pluck_parameters.dp
     F0 = pluck_parameters.F0
