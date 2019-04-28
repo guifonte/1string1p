@@ -2,8 +2,8 @@ import librosa
 import os
 import time
 import numpy as np
-from src.strings import stringscalculator, StringParameters, stringscalculator_1
-from src.body import BodyMatrix1p, BodyMatrix2p, BodyMatrix
+from src.strings import stringscalculator, StringParameters
+from src.body import BodyMatrix
 from src.pluck import PluckParameters
 from src.solver.solver import solverfd, derivative
 
@@ -37,7 +37,7 @@ pluck_parameters = PluckParameters.frommat(pluck_path)
 
 # String
 string_parameters = StringParameters.frommat(string_path)
-string_matrix = stringscalculator_1(string_parameters, fhmax, pluck_parameters.xp, dt)
+string_matrix = stringscalculator(string_parameters, fhmax, pluck_parameters.xp, dt)
 
 # Body
 # body_matrix = BodyMatrix1p.frommat("./DATA/BODY/Viola_ComplexModes_Yzz_Yyz_NoNorm_matrix.mat")
