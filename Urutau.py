@@ -19,9 +19,11 @@ fhmax = 5000  # Maximum frequency of string
 Fs = 5*44100
 dt = 1/Fs
 d = 8  # duration
+Nb = 4
 
 pol_num = 1  # number of polarizations
 cython_opt = 0  # uses cython
+frommat = 1
 audio_pluck_disp = 0
 audio_pluck_vel = 1
 audio_pluck_acc = 0
@@ -40,20 +42,22 @@ string_parameters = StringParameters.frommat(string_path)
 string_matrix = stringscalculator(string_parameters, fhmax, pluck_parameters.xp, dt)
 
 # Body
-# body_matrix = BodyMatrix1p.frommat("./DATA/BODY/Viola_ComplexModes_Yzz_Yyz_NoNorm_matrix.mat")
-'''if pol_num == 2:
-    body_matrix = BodyMatrix1p.fromnp(body_fmk_path, body_phi_path)
+if frommat == 1:
+    body_matrix = BodyMatrix.frommat(body_path, dt)
 else:
-    body_matrix = BodyMatrix2p.frommat("./DATA/BODY/Viola_ComplexModes_Yzz_Yyz_NoNorm_matrix.mat")'''
-# body_matrix = BodyMatrix.fromnp(body_fmk_path, body_phi_path, dt)
-body_matrix = BodyMatrix.frommat(body_path, dt)
+    body_matrix = BodyMatrix.fromnp(body_fmk_path, body_phi_path, body_path, dt, Nb)
+
 
 # Resolution
 result = solverfd(body_matrix, string_matrix, pluck_parameters, d, Fs, pol_num, cython_opt)
 
+if frommat == 1:
+    infilename = os.path.splitext(os.path.basename(body_path))[0]
+else:
+    infilename = os.path.splitext(os.path.basename(body_fmk_path))[0]
+    infilename = infilename[0:-4]
 
 timestamp = str(time.time()).split('.')[0]
-infilename = os.path.splitext(os.path.basename(body_path))[0]
 outpath = './OUT/' + timestamp
 outfilename = str(pol_num) + 'p_' + infilename + '_' + string_parameters.note + '_' + str(fhmax) + 'Hz' + '.wav'
 

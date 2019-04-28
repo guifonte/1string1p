@@ -34,13 +34,15 @@ class BodyMatrix(object):
         return cls(B1, B2, PhiBz, PhiBy, GBz, GBy, Nb)
 
     @classmethod
-    def fromnp(cls, fmkfilename, phifilename, dt):
+    def fromnp(cls, fmkfilename, phifilename, xsimatfile, dt, Nb):
+        xsifile = scipy.io.loadmat(xsimatfile, squeeze_me=True)
+        xsi = np.array(xsifile['body_matrix']['xsi'].tolist())
+        xsi = xsi[0:Nb]
         fmk = np.load(fmkfilename)
         phi = np.load(phifilename)
 
-        freq = fmk[:, 0]
-        mk = fmk[:, 1]
-        xsi = np.ones(len(mk))*0.01  # fmk[:, 3]
+        freq = fmk[0:Nb, 0]
+        mk = fmk[0:Nb, 1]
 
         wdk = 2*np.pi*freq
         wnk = wdk/np.sqrt(1-xsi**2)
@@ -51,8 +53,8 @@ class BodyMatrix(object):
         KK = np.diagflat(kk)
         CK = np.diagflat(ck)
 
-        PhiBz = phi[:, 2]  # dz
-        PhiBy = phi[:, 1]  # dy
+        PhiBz = phi[0:Nb, 2]  # dz
+        PhiBy = phi[0:Nb, 1]  # dy
 
         Nb = len(mk)
 
